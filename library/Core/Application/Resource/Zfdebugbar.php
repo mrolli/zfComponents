@@ -1,6 +1,6 @@
 <?php
 
-class Core_Application_Resource_Zfdebug extends \Zend_Application_Resource_ResourceAbstract
+class Core_Application_Resource_Zfdebugbar extends \Zend_Application_Resource_ResourceAbstract
 {
 
     /**
@@ -96,7 +96,7 @@ class Core_Application_Resource_Zfdebug extends \Zend_Application_Resource_Resou
             $this->getBootstrap()->bootstrap('frontController');
 
             // instantiate plugin
-            $debug = new ZFDebug_Controller_Plugin_Debug($options);
+            $debug = new Core\Controller\Plugin\DebugPlugin($options);
 
             // add plugin to front controller
             $frontController = $this->getBootstrap()->getResource('frontController');

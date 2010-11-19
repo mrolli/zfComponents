@@ -153,6 +153,9 @@ class Doctrine extends \ZFDebug_Controller_Plugin_Debug_Plugin implements \ZFDeb
             if (is_string($param)) {
                 $param = '"' . $param . '"';
             }
+            if (\is_object($param)) {
+                $param = '' . \get_class($param) . '()';
+            }
             $sql = substr_replace($sql, $param, strpos($sql, '?'), 1);
         }
         return $sql;

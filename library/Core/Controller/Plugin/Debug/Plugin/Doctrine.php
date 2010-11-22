@@ -150,13 +150,19 @@ class Doctrine extends \ZFDebug_Controller_Plugin_Debug_Plugin implements \ZFDeb
     protected function prepareSql($sql, $params)
     {
         foreach ($params as $param) {
-            if (is_string($param)) {
-                $param = '"' . $param . '"';
+            $replacement = '';
+            if (is_int($param) || is_float($param) {
+                $replacement = $param;
+            } else if (is_string($param)) {
+                $replacement = '"' . $param . '"';
+            } else if (is_bool($param)) {
+                $replacement = $param ? 1 : 0;
+            } else if (is_object($param)) {
+                if ($param instanceof DateTime) {
+                    $replacement = $param->format('Y-m-d');
+                }
             }
-            if (\is_object($param)) {
-                $param = '' . \get_class($param) . '()';
-            }
-            $sql = substr_replace($sql, $param, strpos($sql, '?'), 1);
+            $sql = substr_replace($sql, $replacement, strpos($sql, '?'), 1);
         }
         return $sql;
     }
